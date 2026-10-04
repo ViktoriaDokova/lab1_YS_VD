@@ -3,30 +3,29 @@
 #include <algorithm>
 #include <stdexcept>
 
-CardDealer::CardDealer(int ranks_per_suit)
-    : ranks_per_suit_(ranks_per_suit), generator_(std::random_device{}()) {
-  if (ranks_per_suit < 1) {
-    throw std::invalid_argument("Кількість карт кожної масті має бути додатною");
+CardDealer::CardDealer(int ranks)
+    : ranks_per_suit(ranks), generator(std::random_device{}()) {
+  if (ranks < 1) {
+    throw std::invalid_argument("Ranks per suit must be positive");
   }
   TakeNewDeck();
 }
 
 void CardDealer::TakeNewDeck() {
-  deck_.clear();
-  for (Suit suit :
-       {Suit::kHearts, Suit::kDiamonds, Suit::kClubs, Suit::kSpades}) {
-    for (int rank = 1; rank <= ranks_per_suit_; ++rank) {
-      deck_.push_back(Card{rank, suit});
+  deck.clear();
+  for (Suit suit : {Suit::Hearts, Suit::Diamonds, Suit::Clubs, Suit::Spades}) {
+    for (int rank = 1; rank <= ranks_per_suit; ++rank) {
+      deck.push_back(Card{rank, suit});
     }
   }
-  std::ranges::shuffle(deck_, generator_);
-  next_ = 0;
-  ++decks_used_;
+  std::ranges::shuffle(deck, generator);
+  next_index = 0;
+  ++decks_used;
 }
 
 Card CardDealer::operator()() {
-  if (next_ == deck_.size()) {
+  if (next_index == deck.size()) {
     TakeNewDeck();
   }
-  return deck_[next_++];
+  return deck[next_index++];
 }

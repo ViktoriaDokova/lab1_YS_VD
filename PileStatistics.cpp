@@ -8,7 +8,7 @@
 
 std::vector<int> DealPiles(CardDealer& dealer, long long card_count) {
   if (card_count < 1) {
-    throw std::invalid_argument("Кількість карт для роздачі має бути додатною");
+    throw std::invalid_argument("Number of cards must be positive");
   }
 
   std::vector<int> lengths;
@@ -25,19 +25,20 @@ std::vector<int> DealPiles(CardDealer& dealer, long long card_count) {
     }
     previous = card;
   }
-  lengths.push_back(current_length);  // The last, unfinished pile.
+  // The last pile is cut off by the end of dealing but still counted.
+  lengths.push_back(current_length);
   return lengths;
 }
 
 PileStatistics ComputeStatistics(std::vector<int> lengths, int max_length) {
   if (lengths.empty()) {
-    throw std::invalid_argument("Немає жодної стопки для аналізу");
+    throw std::invalid_argument("No piles to analyze");
   }
 
   PileStatistics stats;
   stats.pile_count = lengths.size();
 
-  // Include every possible length, even those that never occurred.
+  // Lengths that never occurred must still be listed with 0%.
   std::map<int, int> counts;
   for (int length = 1; length <= max_length; ++length) {
     counts[length] = 0;
@@ -67,16 +68,11 @@ PileStatistics ComputeStatistics(std::vector<int> lengths, int max_length) {
 }
 
 void PrintStatistics(const PileStatistics& stats, std::ostream& out) {
-  out << std::format("\nУсього стопок: {}\n\n", stats.pile_count);
-  out << " Довжина |  % стопок\n";
-  out << "---------+-----------\n";
+  out << std::format("Total piles: {}\n\n", stats.pile_count);
   for (const auto& [length, percent] : stats.percent_by_length) {
-    out << std::format("{:>8} | {:>8.3f}%\n", length, percent);
+    out << std::format("Length {}: {:.3f}%\n", length, percent);
   }
-  out << std::format("\nНайчастіша довжина стопки: {}\n",
-                           stats.most_frequent_length);
-  out << std::format("Середня довжина стопки:    {:.4f}\n",
-                           stats.mean_length);
-  out << std::format("Медіанна довжина стопки:   {}\n",
-                           stats.median_length);
+  out << std::format("\nMost frequent length: {}\n", stats.most_frequent_length);
+  out << std::format("Mean length: {:.4f}\n", stats.mean_length);
+  out << std::format("Median length: {}\n", stats.median_length);
 }

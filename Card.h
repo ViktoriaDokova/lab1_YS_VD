@@ -1,19 +1,16 @@
-#ifndef CARD_H_
-#define CARD_H_
+#pragma once
 
 #include <compare>
 
-enum class Suit { kHearts, kDiamonds, kClubs, kSpades };
+enum class Suit { Hearts, Diamonds, Clubs, Spades };
 
-// A playing card. Cards are compared by rank only; suit is ignored.
 struct Card {
   int rank = 1;
-  Suit suit = Suit::kHearts;
+  Suit suit = Suit::Hearts;
 
-  // Weak ordering: cards of equal rank but different suits are equivalent.
+  // Compared by rank only, so cards of equal rank and different suits are
+  // equivalent but not identical - hence weak_ordering.
   std::weak_ordering operator<=>(const Card& other) const {
     return rank <=> other.rank;
   }
 };
-
-#endif  // CARD_H_
