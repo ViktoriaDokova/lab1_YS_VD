@@ -1,0 +1,35 @@
+Ranks per suit: 13
+Cards dealt: 100000
+Decks used: 1924
+Total piles: 52902
+
+Length 1: 37.358%
+Length 2: 41.715%
+Length 3: 16.292%
+Length 4: 3.898%
+Length 5: 0.658%
+Length 6: 0.072%
+Length 7: 0.008%
+Length 8: 0.000%
+Length 9: 0.000%
+Length 10: 0.000%
+Length 11: 0.000%
+Length 12: 0.000%
+Length 13: 0.000%
+
+Most frequent length: 2
+Mean length: 1.8903
+Median length: 2
+
+Experiment (1000000 cards for each value):
+ranks = 1: mean = 1.0000, median = 1
+ranks = 2: mean = 1.3922, median = 1
+ranks = 3: mean = 1.5648, median = 1
+ranks = 4: mean = 1.6621, median = 2
+ranks = 6: mean = 1.7670, median = 2
+ranks = 9: mean = 1.8400, median = 2
+ranks = 13: mean = 1.8886, median = 2
+ranks = 20: mean = 1.9259, median = 2
+ranks = 50: mean = 1.9710, median = 2
+ranks = 100: mean = 1.9848, median = 2
+ranks = 500: mean = 1.9971, median = 2
